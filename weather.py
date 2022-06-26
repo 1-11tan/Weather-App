@@ -6,7 +6,6 @@ from timezonefinder import TimezoneFinder
 from datetime import datetime
 import requests
 import pytz
-import json
 
 root=Tk()
 root.title("Weather App")
@@ -28,16 +27,15 @@ def getWeather():
     name.config(text="CURRENT WEATHER")
 
     api="http://api.openweathermap.org/geo/1.0/direct?q="+city+"&appid=6bd7f6b949e5a699022e85b847182325"
-
-    json_data=requests.get(api).json()
-    conditions = json_data['weather'][0]['main']
-    description = json_data['weather'][0]['description']
-    time = int(json_data['main']['temp']-273.15)
-    pressure = json_data['main']['pressure']
-    wind = json_data['wind']['speed']
+    api_data=requests.get(api).json()
+    condition = api_data['weather'][0]['main']
+    description = api_data['weather'][0]['description']
+    time = int(api_data['main']['temp']-273.15)
+    pressure = api_data['main']['pressure']
+    wind = api_data['wind']['speed']
 
     t.config(text=(temp+"°"))
-    c,config(text=(condition,"|","FEELS","LIKE",temp,"°"))
+    c.config(text=(condition+"|"+"FEELS"+"LIKE"+temp+"°"))
 
 
 
@@ -101,4 +99,4 @@ p.place(x=660,y=430)
 
 root.mainloop()
 
-
+getWeather()
